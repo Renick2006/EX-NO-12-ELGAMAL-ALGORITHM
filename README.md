@@ -1,5 +1,9 @@
 # EX-NO-12-ELGAMAL-ALGORITHM
 
+## NAME : Renick Fabian Rajesh
+## REG NO: 212224230227
+## Date : 01/07/2026
+
 ## AIM:
 To Implement ELGAMAL ALGORITHM
 
@@ -25,8 +29,75 @@ To Implement ELGAMAL ALGORITHM
 
 ## Program:
 
+```C
+#include <stdio.h>
+
+long long modExp(long long base, long long exp, long long mod)
+{
+    long long result = 1;
+
+    while(exp > 0)
+    {
+        if(exp % 2 == 1)
+        {
+            result = (result * base) % mod;
+        }
+
+        base = (base * base) % mod;
+        exp = exp / 2;
+    }
+
+    return result;
+}
+
+int main()
+{
+    long long p, g;
+    long long privateKeyA, publicKeyA;
+    long long k, message;
+    long long c1, c2;
+    long long decryptedMessage;
+
+    printf("Enter prime number (p): ");
+    scanf("%lld", &p);
+
+    printf("Enter generator (g): ");
+    scanf("%lld", &g);
+
+    printf("Enter Charan's private key: ");
+    scanf("%lld", &privateKeyA);
+
+    publicKeyA = modExp(g, privateKeyA, p);
+
+    printf("Charan's Public Key = %lld\n", publicKeyA);
+
+    printf("Enter message to encrypt: ");
+    scanf("%lld", &message);
+
+    printf("Enter random value k: ");
+    scanf("%lld", &k);
+
+    c1 = modExp(g, k, p);
+    c2 = (message * modExp(publicKeyA, k, p)) % p;
+
+    printf("\nEncrypted Cipher Text:\n");
+    printf("C1 = %lld\n", c1);
+    printf("C2 = %lld\n", c2);
+
+    decryptedMessage =
+        (c2 * modExp(c1, p - 1 - privateKeyA, p)) % p;
+
+    printf("\nDecrypted Message = %lld\n", decryptedMessage);
+
+    return 0;
+}
+```
+
 
 ## Output:
+
+<img width="1919" height="883" alt="Screenshot 2026-08-21 112016" src="https://github.com/user-attachments/assets/716dc248-90cb-4764-b4ac-51102c96200b" />
+
 
 
 ## Result:
